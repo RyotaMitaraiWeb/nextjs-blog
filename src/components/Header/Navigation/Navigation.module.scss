@@ -1,0 +1,31 @@
+.nav {
+    width: 100%;
+    padding: 0;
+
+    ul {
+        list-style: none;
+        text-align: center;
+        width: 100%;
+        padding: 0;
+        
+        li {
+            text-align: left;
+            display: inline-block;
+            margin-right: 4px;
+
+            @media screen and (max-width: 580px) {
+                display: block;
+                text-align: center;
+                margin: 0.5em auto;
+            }
+
+            a, button {
+                font-size: 1.2rem;
+
+                @media screen and (max-width: 580px) {
+                    width: 150px;
+                }
+            }
+        }
+    }
+}
