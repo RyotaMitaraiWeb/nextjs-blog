@@ -16,10 +16,11 @@ export const authOptions: AuthOptions = {
     callbacks: {
         async session({ session, user }) {
             const role = (user as User).role || 'guest';
-            
+            const id = (user as User).id || '';
             if (session.user) {
                 const user = session.user as User;
                 user.role = role;
+                user.id = id;
             }
 
             return session;
