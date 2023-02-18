@@ -10,3 +10,8 @@
  * **Note:** this role cannot be assigned via APIs; this must be done in the database itself.
  */
 export type role = 'guest' | 'user' | 'writer' | 'admin' | 'superadmin';
+
+export interface IArticleSubmission {
+    title?: string;
+    content?: string;
+}
