@@ -1,11 +1,19 @@
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { Avatar, Button, Card, CardActionArea, CardActions, CardContent, CardHeader } from "@mui/material";
+import { User } from "@prisma/client";
 import { GetServerSideProps } from "next";
+import { getServerSession } from "next-auth";
+import { AdminGuard } from "../../src/guards/AdminGuard";
+import { AuthorGuard } from "../../src/guards/AuthorGuard";
+import { WriterGuard } from "../../src/guards/WriterGuard";
 import Link from "../../src/Link";
-import { IArticleCard } from "../../types/types";
+import { IArticleCard, role } from "../../types/types";
+import { authOptions } from "../api/auth/[...nextauth]";
 import styles from './article.module.scss';
 
-export default function AllArticles({ articles }: { articles: IArticleCard[] }) {
-    const articleCards = articles.map(a => <ArticleCard article={a} key={a.id} />);
+export default function AllArticles({ articles, user }: { articles: IArticleCard[], user: User | null }) {
+    const articleCards = articles.map(a => <ArticleCard user={user} article={a} key={a.id} />);
     return (
         <section>
             <h1 className={styles.heading}>All articles</h1>
@@ -14,7 +22,7 @@ export default function AllArticles({ articles }: { articles: IArticleCard[] }) 
     );
 }
 
-function ArticleCard({ article }: { article: IArticleCard }) {
+export function ArticleCard({ article, user }: { article: IArticleCard, user: User | null }) {
     const date = new Date(article.createdAt);
     const shortDate = date.toLocaleDateString('en', {
         day: '2-digit',
@@ -40,7 +48,7 @@ function ArticleCard({ article }: { article: IArticleCard }) {
             <CardContent>
                 <h2>{article.title}</h2>
             </CardContent>
-            <CardActions sx={{paddingBottom: 2}}>
+            <CardActions className={styles.actions}>
                 <Button
                     variant="contained"
                     LinkComponent={Link}
@@ -48,17 +56,63 @@ function ArticleCard({ article }: { article: IArticleCard }) {
                 >
                     Read
                 </Button>
+                <WriterButtons user={user} article={article} />
             </CardActions>
         </Card>
     )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+function WriterButtons({ article, user }: { article: IArticleCard, user: User | null }) {
+    const role = user?.role || 'guest';
+    if (AdminGuard(role) || AuthorGuard(user?.id, article.author.id, role)) {
+        return (
+            <>
+                <Button
+                    color="secondary"
+                    variant="contained"
+                    LinkComponent={Link}
+                    href={`/article/${article.id}/edit`}
+                    sx={{
+                        display: 'flex',
+                        gap: '8px',
+                        marginLeft: '0'
+                    }}
+                >
+                    <EditIcon />
+                    Edit
+                </Button>
+                <Button
+                    color="error"
+                    variant="contained"
+                    LinkComponent={Link}
+                    href={`/article/${article.id}/delete`}
+                    sx={{
+                        display: 'flex',
+                        gap: '8px',
+                        marginLeft: '0'
+                    }}
+                >
+                    <DeleteIcon />
+                    Delete
+                </Button>
+            </>
+        )
+    }
+
+    return null;
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
     const res = await fetch('http://localhost:3000/api/article/all');
     const articles = await res.json();
+
+    const session = await getServerSession(context.req, context.res, authOptions);
+    const user = session?.user || null;
+
     return {
         props: {
-            articles
+            articles,
+            user,
         }
     }
 }
