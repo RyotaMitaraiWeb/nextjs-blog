@@ -10,3 +10,23 @@
         margin-top: 30px;
     }
 }
+
+.card {
+    width: 60%;
+    margin: 1em auto;
+    font-weight: bold;
+
+    @media screen and (max-width: 860px) {
+        width: 90%;
+    }
+
+    h2 {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+}
+
+.heading {
+    text-align: center;
+    font-size: 2rem;
+}

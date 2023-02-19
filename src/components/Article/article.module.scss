@@ -1,0 +1,42 @@
+.article {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 60%;
+    margin: 1em auto;
+
+    @media screen and (max-width: 580px) {
+        width: 80%;
+    }
+
+    h1 {
+        font-size: 3rem;
+
+        @media screen and (max-width: 580px) {
+            font-size: 2rem;
+        }
+    }
+
+    .author {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        align-self: flex-start;
+
+        .info {
+            display: flex;
+            flex-direction: column;
+            font-size: 1.05rem;
+
+            .name {
+                font-weight: bold;
+            }
+
+            .date {
+                color: gray;
+                font-weight: bold;
+            }
+        }
+    }
+}
