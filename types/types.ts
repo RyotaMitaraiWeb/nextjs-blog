@@ -11,7 +11,67 @@
  */
 export type role = 'guest' | 'user' | 'writer' | 'admin' | 'superadmin';
 
+/**
+ * ```typescript
+ * interface IArticleSubmission {
+    title?: string;
+    content?: string;
+}
+ * ```
+ * Validation model for creating and editing articles
+ */
 export interface IArticleSubmission {
     title?: string;
     content?: string;
+}
+
+/**
+ * ```typescript
+ * interface IArticle {
+    title: string;
+    content: string;
+    createdAt: string;
+    userId: string;
+    author: {
+        id: string;
+        name: string;
+    }
+}
+ * ```
+ */
+export interface IArticle {
+    id: string;
+    title: string;
+    content: string;
+    createdAt: string;
+    userId: string;
+    author: {
+        id: string;
+        name: string;
+        image: string;
+    }
+}
+
+/**
+ * ```typescript
+ * interface IArticleCard {
+    id: string;
+    title: string;
+    createdAt: string;
+    author: {
+        name: string;
+        image: string;
+    }
+}
+ * ```
+ */
+export interface IArticleCard {
+    id: string;
+    title: string;
+    createdAt: string;
+    author: {
+        id: string;
+        name: string;
+        image: string;
+    }
 }
