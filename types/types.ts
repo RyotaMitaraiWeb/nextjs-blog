@@ -1,3 +1,5 @@
+import { Comment } from "@prisma/client";
+
 /**
  * Description of each role:
  * * **guest** - the role of unauthenticated users. Guests can view articles and user profiles, but
@@ -49,7 +51,8 @@ export interface IArticle {
         id: string;
         name: string;
         image: string;
-    }
+    },
+    comments: IComment[],
 }
 
 /**
@@ -69,6 +72,31 @@ export interface IArticleCard {
     id: string;
     title: string;
     createdAt: string;
+    author: {
+        id: string;
+        name: string;
+        image: string;
+    },
+    comments: IComment[],
+}
+
+/**
+ * ```typescript
+interface IComment {
+    id: string;
+    content: string;
+    createdAt: Date;
+    userId: string;
+    articleId: string;
+    author: {
+        id: string;
+        name: string;
+        image: string;
+    }
+}
+```
+ */
+export interface IComment extends Comment {
     author: {
         id: string;
         name: string;

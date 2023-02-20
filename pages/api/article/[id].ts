@@ -15,9 +15,13 @@ const handler: NextApiHandler = async (req, res) => {
                         image: true,
                     }
                 },
-                comments: true,
+                comments: {
+                    include: {
+                        author: true,
+                    }
+                },
             }
-        });
+        });        
     
         res.status(200).json(article);
     } catch (err) {
