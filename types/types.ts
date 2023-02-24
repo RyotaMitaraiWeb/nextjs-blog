@@ -1,4 +1,4 @@
-import { Comment } from "@prisma/client";
+import { Comment, User } from "@prisma/client";
 
 /**
  * Description of each role:
@@ -102,4 +102,8 @@ export interface IComment extends Comment {
         name: string;
         image: string;
     }
+}
+
+export interface IUser extends User {
+    articles?: IArticle[],
 }

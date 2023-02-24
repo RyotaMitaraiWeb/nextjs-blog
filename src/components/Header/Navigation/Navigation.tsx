@@ -32,7 +32,7 @@ function AuthLinks() {
 
     return (
         <>
-            <li><Button variant="text" href="/profile" LinkComponent={Link}>Profile</Button></li>
+            <li><Button variant="text" href={`/profile/${user.id}`} LinkComponent={Link}>Profile</Button></li>
             <li><Button variant="text" className={styles.signButton} onClick={() => signOut({ redirect: false })}>Sign out</Button></li>
         </>
     )

@@ -2,6 +2,7 @@ import { NextApiHandler } from "next";
 
 const handler: NextApiHandler = async (req, res) => {
     const id = req.query.id as string || '';
+    
     try {
         const article = await prisma?.article.findUniqueOrThrow({
             where: {
