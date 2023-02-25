@@ -1,6 +1,7 @@
 import { Create } from "@mui/icons-material";
 import { Avatar, Card, CardContent, CardHeader } from "@mui/material";
 import { IComment } from "../../../types/types";
+import Link from "../../Link";
 import styles from './comment.module.scss';
 export default function Comment({ comment, authorId }: { comment: IComment, authorId: string }) {
     const date = new Date(comment.createdAt);
@@ -19,7 +20,7 @@ export default function Comment({ comment, authorId }: { comment: IComment, auth
         <Card className={styles.comment}>
             <CardHeader
                 title={
-                    <h3>{comment.author.name}</h3>
+                    <h3><Link href={`/profile/${comment.author.id}`}>{comment.author.name}</Link></h3>
                 }
                 avatar={
                     <Avatar src={comment.author.image} imgProps={{

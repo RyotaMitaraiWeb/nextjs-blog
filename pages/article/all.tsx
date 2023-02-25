@@ -36,10 +36,10 @@ export function ArticleCard({ article, user }: { article: IArticleCard, user: Us
                 avatar={
                     <Avatar src={article.author.image} />
                 }
-                title={article.author.name}
+                title={<Link className={styles.authorLink} href={`/profile/${article.author.id}`}>{article.author.name}</Link>}
                 subheader={shortDate}
                 titleTypographyProps={{
-                    fontWeight: 'bold'
+                    fontWeight: 'bold',
                 }}
                 subheaderTypographyProps={{
                     fontWeight: 'bold'

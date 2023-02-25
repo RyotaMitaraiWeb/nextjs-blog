@@ -5,7 +5,6 @@ import Opening from "../../src/components/Article/Opening";
 import Comments from "../../src/components/Comments/Comments";
 import { IArticle } from "../../types/types";
 import { authOptions } from "../api/auth/[...nextauth]";
-import styles from './article.module.scss';
 
 export default function Article({ article, user }: { article: IArticle, user: User | null }) {    
     return (

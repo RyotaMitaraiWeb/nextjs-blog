@@ -1,5 +1,6 @@
 import { Avatar } from "@mui/material";
 import { IArticle } from "../../../types/types";
+import Link from "../../Link";
 import styles from './article.module.scss';
 
 export default function Opening({ article }: { article: IArticle }) {
@@ -33,7 +34,9 @@ function Author({ article }: { article: IArticle }) {
                 sx={{ width: 48, height: 48 }}
             />
             <div className={styles.info}>
-                <span className={styles.name}>{article.author.name}</span>
+                <span className={styles.name}>
+                    <Link href={`/profile/${article.author.id}`}>{article.author.name}</Link>
+                </span>
                 
                 <span className={styles.date}>{shortDate}</span>
             </div>
