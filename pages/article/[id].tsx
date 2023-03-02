@@ -9,7 +9,7 @@ import { authOptions } from "../api/auth/[...nextauth]";
 export default function Article({ article, user }: { article: IArticle, user: User | null }) {    
     return (
         <>
-            <Opening article={article} />
+            <Opening article={article} user={user} />
             <Comments user={user} article={article} />
         </>
     )

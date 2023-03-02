@@ -6,7 +6,6 @@ import { GetServerSideProps } from "next";
 import { getServerSession } from "next-auth";
 import { AdminGuard } from "../../src/guards/AdminGuard";
 import { AuthorGuard } from "../../src/guards/AuthorGuard";
-import { WriterGuard } from "../../src/guards/WriterGuard";
 import Link from "../../src/Link";
 import { IArticleCard, role } from "../../types/types";
 import { authOptions } from "../api/auth/[...nextauth]";
@@ -62,7 +61,7 @@ export function ArticleCard({ article, user }: { article: IArticleCard, user: Us
     )
 }
 
-function WriterButtons({ article, user }: { article: IArticleCard, user: User | null }) {
+export function WriterButtons({ article, user }: { article: IArticleCard, user: User | null }) {
     const role = user?.role || 'guest';
     if (AdminGuard(role) || AuthorGuard(user?.id, article.author.id, role)) {
         return (
