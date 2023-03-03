@@ -1,25 +1,30 @@
-import * as React from 'react';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Link from '../src/Link';
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
+import { GetServerSideProps } from 'next';
+import { IArticle } from '../types/types';
+import { ArticleCard } from './article/all';
+import { User } from '@prisma/client';
 
-export default function Home() {
-    const { data, status } = useSession();
-    let logged = 'guest';
-    if (status === 'authenticated') {
-        logged = data.user?.name || '';
-    }
-
-    console.log(data);
+export default function Home({ articles }: { articles: IArticle[] }) {
+    const { data } = useSession();
+    const user = data?.user as User | null;
+    const newestArticles = articles.map(a => <ArticleCard key={a.id} article={a} user={user} />);
 
     return (
-        <main>
-            <h1>Home</h1>
-            <p>Hi, {logged}</p>
-            <button onClick={() => signIn('google')}>Sign in</button>
-            { data ? <button onClick={() => signOut()}>Sign out</button> : null}
-        </main>
+        <section>
+            <h1 style={{ textAlign: 'center' }}>Home</h1>
+            <h2 style={{ textAlign: 'center' }}>Newest articles</h2>
+            {newestArticles}
+        </section>
     );
+}
+
+export const getServerSideProps: GetServerSideProps = async () => {
+    const res = await fetch('http://localhost:3000/api/article/newest');
+    const articles = await res.json();
+
+    return {
+        props: {
+            articles,
+        }
+    }
 }
